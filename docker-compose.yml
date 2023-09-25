@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./dataset:/docker-entrypoint-initdb.d
+  backend:
+    build:
+      context: ./spring-boot-server      
+    ports:
+      - "8082:8080"
+    depends_on:
+      - db
+  frontend:
+    build: 
+      context: ./angular-14-client
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
