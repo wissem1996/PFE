@@ -7,18 +7,18 @@ on:
     branches: [ "githubActions" ]
 
 jobs:
-  build artifact:
+  build:
 
     runs-on: docker pull maven:3.3.9-jdk-8-onbuild
     steps:
     - uses: actions/checkout@v3
     - name: building spring artifact
     - run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
-  build docker-compose:
+  builddocker:
 
     runs-on: ubuntu-latest
-    depends-on: build artifact
+    needs: build
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker-compose
-      run: docker-compose build  
+    - run: docker-compose build  
