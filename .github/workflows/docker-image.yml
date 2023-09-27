@@ -19,6 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     depends-on: build artifact
     steps:
-    
+    - uses: actions/checkout@v3
     - name: Build the Docker-compose
       run: docker-compose build  
