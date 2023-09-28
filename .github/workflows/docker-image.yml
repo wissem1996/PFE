@@ -36,8 +36,8 @@ jobs:
           name: app
           path: ./spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
 
-      - name: Build Docker Compose
-        run: docker-compose build & push
+      - name: Build Docker Compose & push images
+        run: docker-compose build
       - name: show images
         run: docker images
       - name: Push Backend Image to Docker Hub
