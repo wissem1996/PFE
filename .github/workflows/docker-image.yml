@@ -51,7 +51,7 @@ jobs:
             DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         - name: Push Backend Image to Docker Hub
           run: |
-            docker tag backend:latest ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
+            docker tag backend:latest ${{ secrets.DOCKERHUB_USERNAME }}/pfe_backend:latest
             docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
   push_frontend:
@@ -68,5 +68,5 @@ jobs:
 
         - name: Push Frontend Image to Docker Hub
           run: |
-            docker tag frontend:latest ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+            docker tag frontend:latest ${{ secrets.DOCKERHUB_USERNAME }}/pfe_frontend:latest
             docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
