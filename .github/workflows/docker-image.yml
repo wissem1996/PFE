@@ -13,10 +13,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build the Docker-compose
-        run: |
-          mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
+        run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
+      - name: copy jar file to next step
           # Package the artifact (e.g., JAR file) as an artifact
-          cp ./spring-boot-server/target/*.jar $GITHUB_WORKSPACE/my-app.jar
+        run:  cp ./spring-boot-server/target/*.jar $GITHUB_WORKSPACE/my-app.jar
         # Publish the artifact for use in subsequent jobs
         continue-on-error: true
         env:
