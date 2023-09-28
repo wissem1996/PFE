@@ -37,6 +37,8 @@ jobs:
 
       - name: Build Docker Compose
         run: docker-compose build
+      - name: show images
+        run: docker images
           
   push_backend:
     runs-on: ubuntu-latest
