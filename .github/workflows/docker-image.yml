@@ -13,16 +13,16 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build the Docker-compose
-        run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
-      - name: copy jar file to next step
-          # Package the artifact (e.g., JAR file) as an artifact
-        run:  cp ./spring-boot-server/target/*.jar $GITHUB_WORKSPACE/my-app.jar
-        # Publish the artifact for use in subsequent jobs
-        continue-on-error: true
-        env:
-          GITHUB_WORKSPACE: ${{ github.workspace }}
-        # Create a temporary workspace for this job
-        working-directory: ${{ github.workspace }}
+        run: |
+          mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
+          # Package the artifact (e.g., JAR file)
+          cp ./spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar $GITHUB_WORKSPACE/app.jar
+        # Upload the artifact for use in subsequent jobs
+        - name: Upload Artifact
+          uses: actions/upload-artifact@master
+          with:
+            name: app
+            path: $GITHUB_WORKSPACE/app.jar
 
   build_docker_compose:
     runs-on: ubuntu-latest
@@ -30,15 +30,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: app
+          path: $GITHUB_WORKSPACE/app.jar
+
       - name: Build Docker Compose
         run: |
-          # Retrieve the artifact from the previous job
-          cp $GITHUB_WORKSPACE/my-app.jar ./spring-boot-server/target/my-app.jar
+          # Use the downloaded artifact in the Docker Compose build
+          cp $GITHUB_WORKSPACE/app.jar ./spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
           docker-compose build
-        env:
-          GITHUB_WORKSPACE: ${{ github.workspace }}
-        # Use the same temporary workspace as build_maven
-        working-directory: ${{ github.workspace }}
 
   push_backend:
     runs-on: ubuntu-latest
