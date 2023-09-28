@@ -17,6 +17,7 @@ jobs:
 
   build_docker_compose:
     runs-on: ubuntu-latest
+    needs: [build_maven]  # This ensures that build_maven job runs before this job
     steps:
       - uses: actions/checkout@v3
 
@@ -32,8 +33,8 @@ jobs:
 
       - name: Push Backend Image to Docker Hub
         run: |
-          docker tag backend:latest ${{ secrets.DOCKERHUB_USERNAME }}/backendwiss:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/backendwiss:latest
+          docker tag backend:latest ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
   push_frontend:
     runs-on: ubuntu-latest
@@ -44,5 +45,5 @@ jobs:
 
       - name: Push Frontend Image to Docker Hub
         run: |
-          docker tag frontend:latest ${{ secrets.DOCKERHUB_USERNAME }}/frontendwiss:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontendwiss:latest
+          docker tag frontend:latest ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
