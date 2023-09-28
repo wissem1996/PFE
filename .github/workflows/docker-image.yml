@@ -22,7 +22,7 @@ jobs:
         env:
           GITHUB_WORKSPACE: ${{ github.workspace }}
         # Create a temporary workspace for this job
-        working-directory: ${{ github.workspace }}/build_maven
+        working-directory: ${{ github.workspace }}
 
   build_docker_compose:
     runs-on: ubuntu-latest
