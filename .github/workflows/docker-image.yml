@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "githubActions" ]
+    branches: [ "securityTests" ]
   pull_request:
-    branches: [ "githubActions" ]
+    branches: [ "securityTests" ]
 
 jobs:
   build_maven:
