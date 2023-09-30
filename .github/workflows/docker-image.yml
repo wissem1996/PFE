@@ -20,7 +20,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app
-          path: ./spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
+          path: ./spring-boot-server/target/*
 
   build_docker_compose:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: app
-          path: ./spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
+          path: ./spring-boot-server/target/*
 
       - name: Build Docker Compose & push images
         run: docker-compose build
