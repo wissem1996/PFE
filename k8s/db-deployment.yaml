@@ -40,4 +40,4 @@ spec:
       volumes:
         - name: dataset-volume
           hostPath:
-            path: ../dataset/innit.sql
+            path: '/W/db'

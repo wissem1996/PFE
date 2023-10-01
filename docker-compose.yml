@@ -14,6 +14,11 @@ services:
   backend:
     build:
       context: ./spring-boot-server      
+    environment:
+      - DB_PASSWORD=tutopwd
+      - DB_USERNAME=tutorialsuser
+      - DB_NAME=tutorialsdb
+      - DB_HOST=db
     ports:
       - "8082:8080"
     depends_on:
@@ -21,6 +26,8 @@ services:
   frontend:
     build: 
       context: ./angular-14-client
+    environment:
+      - BACKEND=localhost:8082
     ports:
       - "8081:80"
     depends_on:
