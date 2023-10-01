@@ -36,7 +36,7 @@ jobs:
           name: app
           path: spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.zip
       - name: Unzip Artifact
-        run: unzip spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.zip -d spring-boot-server/target/ && ls spring-boot-server/target/
+        run: ls spring-boot-server/target/
       - name: Build backend image
         run:  |
           cd ./spring-boot-server
