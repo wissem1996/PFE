@@ -35,11 +35,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: app
-          path: spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.zip
+          path: spring-boot-server/target/app.zip
       - name: Unzip Artifact
         run: |
+          chmod 775 ./spring-boot-server/target/*
           ls -l ./spring-boot-server/target
-          unzip ./spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.zip -d ./spring-boot-server/target/
+          unzip ./spring-boot-server/target/*.zip -d ./spring-boot-server/target/
 
       - name: Unzip Artifact
         run: ls spring-boot-server/target/
