@@ -36,10 +36,14 @@ jobs:
           name: app
           path: ./spring-boot-server/target/*
 
-      - name: Build Docker Compose & push images
-        run: docker-compose build
-      - name: show images
-        run: docker images
+      - name: Build backend image
+        run: |
+          cd ./spring-boot-server  
+          docker build . -t pfe_backend
+      - name: Build frontend image
+        run: |
+          cd ./angular-14-client  
+          docker build . -t pfe_backend
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Backend Image to Docker Hub
