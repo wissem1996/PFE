@@ -15,7 +15,7 @@ services:
     build:
       context: ./spring-boot-server      
     environment:
-      - DB_PASSWORD=tutopwd
+      - DBPASSWD=tutopwd
       - DB_USERNAME=tutorialsuser
       - DB_NAME=tutorialsdb
       - DB_HOST=db

@@ -28,7 +28,7 @@ spec:
         - name: backend
           image: wissemgh5/pfe_backend
           env:
-             -name: DB_PASSWORD
+             -name: DBPASSWD
               value: tutopwd
              -name: DB_USERNAME
               value: tutorialsuser
