@@ -11,17 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Build the spring app
         run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
           # Package the artifact (e.g., JAR file)
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: app
-          path: spring-boot-server/target/*
-          format: zip
+          path: spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
 
   build_docker_compose:
     runs-on: ubuntu-latest
@@ -32,15 +31,15 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: app
-          path: spring-boot-server/target/app.zip
-      - name: Unzip Artifact
-        run: |
-          chmod 775 ./spring-boot-server/target/*
-          ls -l ./spring-boot-server/target
-          unzip ./spring-boot-server/target/*.zip -d ./spring-boot-server/target/
+          path: spring-boot-server/target
+#      - name: Unzip Artifact
+#        run: |
+#         chmod 775 ./spring-boot-server/target/*
+#          ls -l ./spring-boot-server/target 
+#          unzip ./spring-boot-server/target/*.zip -d ./spring-boot-server/target/ |true
 
       - name: Unzip Artifact
         run: ls spring-boot-server/target/
