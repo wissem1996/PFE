@@ -37,9 +37,7 @@ jobs:
           path: ./spring-boot-server/target/*
 
       - name: Build backend image
-        run: |
-          cd ./spring-boot-server  
-          docker build . -t pfe_backend
+        run: docker build -f ./spring-boot-server/Dockerfile -t pfe_backend
       - name: Build frontend image
         run: |
           cd ./angular-14-client  
