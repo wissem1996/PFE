@@ -20,7 +20,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app
-          path: ./spring-boot-server/target/*
+          path: spring-boot-server/target/*
 
   build_docker_compose:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: app
-          path: ./spring-boot-server/target/*
+          path: spring-boot-server/target/*
 
       - name: Build backend image
         run: docker build . -f ./spring-boot-server/Dockerfile -t pfe_backend
