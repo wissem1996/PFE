@@ -27,7 +27,7 @@ services:
     build: 
       context: ./angular-14-client
     environment:
-      - BACKEND=localhost:8082
+      - BACKEND=backend:8082
     ports:
       - "8081:80"
     depends_on:
