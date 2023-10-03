@@ -39,5 +39,5 @@ spec:
               mountPath: /docker-entrypoint-initdb.d
       volumes:
         - name: dataset-volume
-          hostPath:
-            path: '/W/db'
+          configMap:
+            name: db-configmap
