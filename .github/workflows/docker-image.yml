@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "githubActions" ]
+    branches: [ "angluarVarextern" ]
   pull_request:
-    branches: [ "githubActions" ]
+    branches: [ "angluarVarextern" ]
 
 jobs:
   build_maven:
