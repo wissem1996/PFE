@@ -9,6 +9,6 @@ RUN ls /usr/src/app/dist/
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
 COPY --from=build /usr/src/app/dist/angular-14-crud-example /usr/share/nginx/html
-EXPOSE 80
-CMD [echo ${BACKEND} | sed -i 's#localhost:8082#${BACKEND}#g' /usr/share/nginx/html/*.* ]
-ENTRYPOINT [ "/bin/sh", "-c", "exec nginx -g 'daemon off;'" ]
+COPY entrypoint.sh .
+RUN chmod 775 /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
