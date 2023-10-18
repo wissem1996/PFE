@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-configmap
+data:
+  init.sql: |
+    CREATE DATABASE tutorialsdb;
+    CREATE ROLE tutorialsuser LOGIN PASSWORD 'tutopwd';
+    CREATE DATABASE sonar;
+    CREATE ROLE sonar LOGIN PASSWORD 'password';

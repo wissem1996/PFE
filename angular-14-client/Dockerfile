@@ -9,4 +9,6 @@ RUN ls /usr/src/app/dist/
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
 COPY --from=build /usr/src/app/dist/angular-14-crud-example /usr/share/nginx/html
-EXPOSE 80
+COPY entrypoint.sh .
+RUN chmod 775 /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
