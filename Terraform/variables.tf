@@ -29,11 +29,11 @@ variable "cluster_endpoint_public_access" {
 
 variable "instance_type" {
   type    = string
-  default = "t3.micro"
+  default = "t3.small"
 }
 variable "instance_types" {
   type    = list(string)
-  default = ["t3.micro"]
+  default = ["t3.small"]
 }
 
 variable "capacity_type" {
@@ -70,7 +70,7 @@ variable "public_subnets" {
 }
 variable "min_size" {
   type = number
-  default = 3
+  default = 2
 }
 variable "max_size" { 
   default = 10
@@ -78,6 +78,25 @@ variable "max_size" {
 }
 variable "desired_size" {
   type = number
-  default = 3
+  default = 2
   
 }
+######## Karpenter controller ######
+# variable "identifiers" {
+   
+#     default = [aws_iam_openid_connect_provider.eks.arn]
+  
+# }
+# variable "assume_role_policy" {
+#   default = module.karpenter-controller-role.data.aws_iam_policy_document.karpenter_controller_assume_role_policy.json
+  
+# }
+# variable "policy" {
+
+# }
+# variable "role" {
+#   default = module.karpenter-controller-role.karpenter_controller.name
+# }
+# variable "policy_arn" {
+#   default = module.karpenter-controller-role.karpenter_controller.arn
+# }
