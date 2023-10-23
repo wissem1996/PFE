@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "angluarVarextern" ]
+    branches: [ "terraform" ]
   pull_request:
-    branches: [ "angluarVarextern" ]
+    branches: [ "terraform" ]
 
 jobs:
   build_maven:
