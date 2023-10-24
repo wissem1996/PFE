@@ -28,7 +28,7 @@ spec:
         name: sonarqube
     spec:
       containers:
-        - image: sonarqube:9.9-community
+        - image: sonarqube:alpine
           name: sonarqube
           env:
             - name: SONARQUBE_JDBC_PASSWORD
@@ -40,3 +40,8 @@ spec:
           ports:
             - containerPort: 9000
               name: sonarqube
+          resources:
+            requests:
+              memory: "1Gi"  # Request 1 GiB of RAM
+            limits:
+              memory: "1.5Gi"
