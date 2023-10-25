@@ -8,7 +8,7 @@ RUN npm run build
 RUN ls /usr/src/app/dist/
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
-ENV BACKEND=backend:8080
+ENV BACKEND=backend
 COPY --from=build /usr/src/app/dist/angular-14-crud-example /usr/share/nginx/html
 COPY default.conf /etc/nginx/conf.d
 COPY entrypoint.sh .
