@@ -32,7 +32,7 @@ spec:
             - containerPort: 80
           env:  # Add environment variables here
             - name: BACKEND
-              value: "172.20.41.157:8080"
+              value: "/api/tutorials"
           #Add other configurations as needed
           resources:
             requests:
