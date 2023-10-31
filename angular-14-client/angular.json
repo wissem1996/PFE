@@ -26,6 +26,7 @@
               "src/styles.css"
             ],
             "scripts": []
+            "baseHref": "/front",
           },
           "configurations": {
             "production": {
