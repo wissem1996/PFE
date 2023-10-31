@@ -26,7 +26,7 @@
               "src/styles.css"
             ],
             "scripts": []
-            "baseHref": "/tutorials/",
+            "baseHref": "/",
           },
           "configurations": {
             "production": {
