@@ -49,7 +49,7 @@ jobs:
           timestamp=$(date +%Y%m%d%H%M%S)
           be_image_name="pfe_backend:${timestamp}"
           echo "export be_image_name=$be_image_name" >> $GITHUB_ENV
-          docker build .  -t ${be_image_name}
+          docker build .  -t ${{env.be_image_name}}
           
       - name: Build frontend image
         run: |
@@ -57,21 +57,21 @@ jobs:
           timestamp=$(date +%Y%m%d%H%M%S)
           fe_image_name="pfe_frontend:${timestamp}"
           echo "export fe_image_name=$fe_image_name" >> $GITHUB_ENV
-          docker build . -t ${fe_image_name}
+          docker build . -t ${{env.fe_image_name}}
 
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Backend Image to Docker Hub
         run: |
-          docker tag ${be_image_name} ${{ secrets.DOCKERHUB_USERNAME }}/${be_image_name}
-          fullbe_image_name="${{ secrets.DOCKERHUB_USERNAME }}/${be_image_name}"
+          docker tag ${{env.be_image_name}} ${{ secrets.DOCKERHUB_USERNAME }}/${{env.be_image_name}}
+          fullbe_image_name="${{ secrets.DOCKERHUB_USERNAME }}/${{env.be_image_name}}"
           echo "export fullbe_image_name=$fullbe_image_name" >> $GITHUB_ENV
-          echo ${fullbe_image_name}
-          docker push ${fullbe_image_name}
+          echo ${{env.fullbe_image_name}}
+          docker push ${{env.fullbe_image_name}}
       - name: Push Frontend Image to Docker Hub
         run: |
-          docker tag ${fe_image_name} ${{ secrets.DOCKERHUB_USERNAME }}/${fe_image_name}
-          fullfe_image_name="${{ secrets.DOCKERHUB_USERNAME }}/${fe_image_name}"
+          docker tag ${{env.fe_image_name}} ${{ secrets.DOCKERHUB_USERNAME }}/${{env.fe_image_name}}
+          fullfe_image_name="${{ secrets.DOCKERHUB_USERNAME }}/${{env.fe_image_name}}"
           echo "export fullfe_image_name=$fullfe_image_name" >> $GITHUB_ENV
-          echo ${fullfe_image_name}
-          docker push ${fullfe_image_name}
+          echo ${{env.fullfe_image_name}}
+          docker push ${{env.fullfe_image_name}}
