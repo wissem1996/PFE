@@ -48,6 +48,7 @@ jobs:
           cd ./spring-boot-server
           timestamp=$(date +%Y%m%d%H%M%S)
           be_image_name="pfe_backend:${timestamp}"
+          echo "export be_image_name=$be_image_name" >> $GITHUB_ENV
           docker build .  -t ${be_image_name}
           
       - name: Build frontend image
@@ -55,6 +56,7 @@ jobs:
           cd ./angular-14-client  
           timestamp=$(date +%Y%m%d%H%M%S)
           fe_image_name="pfe_frontend:${timestamp}"
+          echo "export fe_image_name=$fe_image_name" >> $GITHUB_ENV
           docker build . -t ${fe_image_name}
 
       - name: Login to Docker Hub
@@ -63,11 +65,13 @@ jobs:
         run: |
           docker tag ${be_image_name} ${{ secrets.DOCKERHUB_USERNAME }}/${be_image_name}
           fullbe_image_name="${{ secrets.DOCKERHUB_USERNAME }}/${be_image_name}"
+          echo "export fullbe_image_name=$fullbe_image_name" >> $GITHUB_ENV
           echo ${fullbe_image_name}
           docker push ${fullbe_image_name}
       - name: Push Frontend Image to Docker Hub
         run: |
           docker tag ${fe_image_name} ${{ secrets.DOCKERHUB_USERNAME }}/${fe_image_name}
           fullfe_image_name="${{ secrets.DOCKERHUB_USERNAME }}/${fe_image_name}"
+          echo "export fullfe_image_name=$fullfe_image_name" >> $GITHUB_ENV
           echo ${fullfe_image_name}
           docker push ${fullfe_image_name}
