@@ -47,19 +47,27 @@ jobs:
         run:  |
           cd ./spring-boot-server
           timestamp=$(date +%Y%m%d%H%M%S)
-          docker build .  -t pfe_backend:${timestamp}
+          be_image_name="pfe_backend:${timestamp}"
+          docker build .  -t ${be_image_name}
+          
       - name: Build frontend image
         run: |
           cd ./angular-14-client  
           timestamp=$(date +%Y%m%d%H%M%S)
-          docker build . -t pfe_frontend:${timestamp}
+          fe_image_name="pfe_frontend:${timestamp}"
+          docker build . -t ${fe_image_name}
+
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Backend Image to Docker Hub
         run: |
-          docker tag pfe_backend:latest ${{ secrets.DOCKERHUB_USERNAME }}/pfe_backend:${timestamp}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/pfe_backend:${timestamp}
+          docker tag ${be_image_name} ${{ secrets.DOCKERHUB_USERNAME }}/${be_image_name}
+          fullbe_image_name="${{ secrets.DOCKERHUB_USERNAME }}/${be_image_name}"
+          echo ${fullbe_image_name}
+          docker push ${fullbe_image_name}
       - name: Push Frontend Image to Docker Hub
         run: |
-          docker tag pfe_frontend:latest ${{ secrets.DOCKERHUB_USERNAME }}/pfe_frontend:${timestamp}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/pfe_frontend:${timestamp}
+          docker tag ${fe_image_name} ${{ secrets.DOCKERHUB_USERNAME }}/${fe_image_name}
+          fullfe_image_name="${{ secrets.DOCKERHUB_USERNAME }}/${fe_image_name}"
+          echo ${fullfe_image_name}
+          docker push ${fullfe_image_name}
