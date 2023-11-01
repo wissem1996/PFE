@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  annotations:
+    # nginx.ingress.kubernetes.io/use-regex: "true"
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.org/proxy-connect-timeout: 3600s
+    # nginx.org/proxy-read-timeout: 3600s
+    # nginx.org/proxy-send-timeout: 3600s
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80

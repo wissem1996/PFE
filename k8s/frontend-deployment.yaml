@@ -9,6 +9,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -27,6 +28,15 @@ spec:
       containers:
         - name: frontend
           image: wissemgh5/pfe_frontend
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
-          # Add other configurations as needed
+          env:  # Add environment variables here
+            - name: BACKEND
+              value: "backend:8080/api/tutorials"
+          #Add other configurations as needed
+          resources:
+            requests:
+              memory: "300Mi"  # Request 1 GiB of RAM
+            limits:
+              memory: "500Mi"
