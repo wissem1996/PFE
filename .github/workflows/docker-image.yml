@@ -47,9 +47,11 @@ jobs:
         run:  |
           cd ./spring-boot-server
           timestamp=$(date +%Y%m%d%H%M%S)
+          echo ${timestamp}
           be_image_name="pfe_backend:${timestamp}"
+          echo ${be_image_name}
           echo "export be_image_name=$be_image_name" >> $GITHUB_ENV
-          docker build .  -t ${{env.be_image_name}}
+          docker build .  -t ${{be_image_name}}
           
       - name: Build frontend image
         run: |
