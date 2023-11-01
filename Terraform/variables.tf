@@ -26,7 +26,10 @@ variable "cluster_endpoint_public_access" {
   type    = bool
   default = true
 }
-
+variable "cluster_endpoint_private_access" {
+  type = bool
+  default = false
+}
 variable "instance_type" {
   type    = string
   default = "t3.small"
@@ -100,3 +103,11 @@ variable "desired_size" {
 # variable "policy_arn" {
 #   default = module.karpenter-controller-role.karpenter_controller.arn
 # }
+variable "namespace" {
+    type = string
+    default = "monitoring"
+}
+variable "kube-version" {
+    default = "36.2.0"
+
+}

@@ -30,7 +30,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
-              name:  backend
+              name: backend
           env:  # Add environment variables here
             - name: DBPASSWD
               value: tutopwd
@@ -42,6 +42,7 @@ spec:
               value: db
           resources:
             requests:
-              memory: "400Mi"  # Request 1 GiB of RAM
+              memory: "256Mi"  # Request 1 GiB of RAM
             limits:
               memory: "1Gi"
+    

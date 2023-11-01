@@ -48,6 +48,26 @@ module "eks" {
       capacity_type  = var.capacity_type
     }
   }
+  # Extend node-to-node security group rules to fix the 504 gateway problem on ingress
+  node_security_group_additional_rules = {
+    ingress_self_all = {
+      description = "Node to node all ports/protocols"
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "ingress"
+      self        = true
+    }
+    egress_all = {
+      description      = "Node all egress"
+      protocol         = "-1"
+      from_port        = 0
+      to_port          = 0
+      type             = "egress"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+    }
+  }
    aws_auth_roles = [
     {
       rolearn  = "arn:aws:iam::231789677311:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
@@ -161,4 +181,15 @@ resource "helm_release" "karpenter" {
   version          = "3.35.4"
   values           = [file("eks/values/argocd.yaml")]
 }
+
+# resource "aws_route53_zone" "eks" {
+#   name = "espritpfe.com"
+# }
+# resource "aws_route53_record" "eks_endpoint" {
+#   zone_id = aws_route53_zone.eks.zone_id
+#   name    = "www"
+#   type    = "A"
+#   ttl     = "300"
+#   records = [ module.eks.cluster_endpoint]
+# }
 

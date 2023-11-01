@@ -71,3 +71,9 @@ module "eks" {
 
 
 }
+module "grafana-prometheus" {
+  source = "./prometheus-grafana"
+  namespace = var.namespace
+  kube-version = var.kube-version
+
+}
