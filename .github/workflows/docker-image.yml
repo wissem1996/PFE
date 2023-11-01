@@ -2,62 +2,44 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "test" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "test" ]
+    branches: [ "dev" ]
 
 jobs:
-  build_maven:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build the spring app
-        run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
-          # Package the artifact (e.g., JAR file)
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: app
-          path: spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
-
-  build_docker_compose:
+  build_docker_images:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
-    needs: [build_maven]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: app
-          path: spring-boot-server/target
-#      - name: Unzip Artifact
-#        run: |
-#         chmod 775 ./spring-boot-server/target/*
-#          ls -l ./spring-boot-server/target 
-#          unzip ./spring-boot-server/target/*.zip -d ./spring-boot-server/target/ |true
-
-      - name: Unzip Artifact
-        run: ls spring-boot-server/target/
       - name: Build backend image
         run:  |
           cd ./spring-boot-server
-          docker build .  -t pfe_backend
+          # Create a timestamp variable
+          timestamp=$(date +%Y%m%d%H%M%S)
+          # Build the Docker image with a timestamp tag
+          docker build -t pfe_backend:${timestamp} .
       - name: Build frontend image
         run: |
-          cd ./angular-14-client  
-          docker build . -t pfe_frontend
+          cd ./angular-14-client
+          # Create a timestamp variable
+          timestamp=$(date +%Y%m%d%H%M%S)
+          # Build the Docker image with a timestamp tag
+          docker build -t pfe_frontend:${timestamp} .
+
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
       - name: Push Backend Image to Docker Hub
         run: |
-          docker tag pfe_backend:latest ${{ secrets.DOCKERHUB_USERNAME }}/pfe_backend:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/pfe_backend:latest
+          timestamp=$(date +%Y%m%d%H%M%S)
+          docker tag pfe_backend:${timestamp} ${{ secrets.DOCKERHUB_USERNAME }}/pfe_backend:${timestamp}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/pfe_backend:${timestamp}
+
       - name: Push Frontend Image to Docker Hub
         run: |
-          docker tag pfe_frontend:latest ${{ secrets.DOCKERHUB_USERNAME }}/pfe_frontend:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/pfe_frontend:latest
+          timestamp=$(date +%Y%m%d%H%M%S)
+          docker tag pfe_frontend:${timestamp} ${{ secrets.DOCKERHUB_USERNAME }}/pfe_frontend:${timestamp}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/pfe_frontend:${timestamp}
