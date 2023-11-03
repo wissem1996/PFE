@@ -45,7 +45,7 @@ jobs:
         run: ls spring-boot-server/target/
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-backend
-        name: Build backend image
+        name: build-image-backend
         with:
           image: wissemgh5/pfe_backend
           registry: docker.io
@@ -54,7 +54,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-frontend
-        name: Build frontend image
+        name: build-image-frontend
         with:
           image: wissemgh5/pfe_frontend
           registry: docker.io
