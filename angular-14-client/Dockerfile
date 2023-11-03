@@ -3,7 +3,7 @@ FROM node:16.13-alpine AS build
 WORKDIR /usr/src/app
 COPY /angular-14-client/package.json /angular-14-client/package-lock.json ./
 RUN npm install
-COPY ./angular-14-client/* .
+ADD ./angular-14-client/* .
 RUN npm run build
 RUN ls /usr/src/app/dist/
 ### STAGE 2: Run ###
