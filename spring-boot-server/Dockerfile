@@ -4,7 +4,7 @@ ENV DBHOST=${DBHOST}
 ENV DBUSERNAME=${DBUSERNAME}
 ENV DBPASSWD=${DBPASSWD}
 ARG JAR_FILE=target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
-ARG ENTRYPOINT=entrypoint.sh
+ARG ENTRYPOINT=./entrypoint.sh
 COPY ${JAR_FILE} app.jar
 COPY ${ENTRYPOINT} .
 RUN chmod 775 entrypoint.sh
