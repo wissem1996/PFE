@@ -54,7 +54,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v6
         name: Build frontend image
         with:
-          image: wissemgh5/pfe_backend
+          image: wissemgh5/pfe_frontend
           registry: docker.io
           dockerfile: ./angular-14-client/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
