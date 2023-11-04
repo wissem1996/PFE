@@ -21,7 +21,6 @@ jobs:
         with:
           name: app
           path: spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
-
   build_docker_compose:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
@@ -66,10 +65,27 @@ jobs:
           tag: |
             wissemgh5/pfe_frontend:${{ github.sha }}
           
-      - name: Get Image Tag
+  update-manifest-stage:
+   runs-on: ubuntu-latest
+   needs: ['build_docker_compose']
+   environment: GITHUB
+   steps:
+      - uses: actions/checkout@v3
+        with:
+            repository: wissem1996/PFE
+            ref: 'dev'
+            token: ${{ secrets.G_TOKEN }}
+      - name: setup git config
         run: |
-          echo "The image tag is ${{ steps.build-image-backend.outputs.tag }}"
-          echo "The image tag is ${{ steps.build-image-frontend.outputs.tag }}"
+            git config --global user.email ${{ EMAIL }}
+            git config --global user.name ${{ ACTOR }}
+            echo ${{ github.sha }}
+            sed -i "s#wissemgh5.*#wissemgh5/pfe_backend:${{ github.sha }}#g" k8s/backend-deployment.yaml
+            sed -i "s#wissemgh5.*#wissemgh5/pfe_frontend:${{ github.sha }}#g" k8s/frontend-deployment.yaml
+            git add -A
+            git commit -am "Update image for - ${{ github.sha }}"
+      - run: echo ${{ github }}
+      - run: git push origin dev      
         
 
       # - name: Login to Docker Hub
