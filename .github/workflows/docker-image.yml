@@ -47,8 +47,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           push: true
-          tag: |
-            wissemgh5/pfe_backend:${{ github.sha }}
+          tag: ${{ github.sha }}
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-frontend
         name: build-image-frontend
@@ -59,8 +58,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           push: true
-          tag: |
-            wissemgh5/pfe_frontend:${{ github.sha }}
+          tag: ${{ github.sha }}
           
   update-manifest-stage:
    runs-on: ubuntu-latest
