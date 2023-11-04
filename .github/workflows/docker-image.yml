@@ -46,6 +46,7 @@ jobs:
           dockerfile: ./spring-boot-server/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          push: true
           tag: |
             wissemgh5/pfe_backend:${{ github.sha }}
       - uses: mr-smithers-excellent/docker-build-push@v6
@@ -57,6 +58,7 @@ jobs:
           dockerfile: ./angular-14-client/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          push: true
           tag: |
             wissemgh5/pfe_frontend:${{ github.sha }}
           
