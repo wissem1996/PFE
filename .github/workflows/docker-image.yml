@@ -41,7 +41,7 @@ jobs:
         id: build-image-backend
         name: build-image-backend
         with:
-          image: wissemgh5/pfe_backend
+          image: wissemgh5/pfe_backend:${{ github.sha }}
           registry: docker.io
           dockerfile: ./spring-boot-server/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -52,7 +52,7 @@ jobs:
         id: build-image-frontend
         name: build-image-frontend
         with:
-          image: wissemgh5/pfe_frontend
+          image: wissemgh5/pfe_frontend:${{ github.sha }}
           registry: docker.io
           dockerfile: ./angular-14-client/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
