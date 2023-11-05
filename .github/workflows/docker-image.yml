@@ -75,8 +75,8 @@ jobs:
             git config --global user.email ${{secrets.EMAIL }}
             git config --global user.name ${{ secrets.ACTOR }}
             echo ${{ github.sha }}
-            sed -i "s#wissemgh5.*#wissemgh5/pfe_backend:${{ github.sha }}#g" k8s/backend-deployment.yaml
-            sed -i "s#wissemgh5.*#wissemgh5/pfe_frontend:${{ github.sha }}#g" k8s/frontend-deployment.yaml
+            sed -i "s#wissemgh5.*#wissemgh5/pfe_backend:${{ github.sha }}#g" k8s/backend/backend-deployment.yaml
+            sed -i "s#wissemgh5.*#wissemgh5/pfe_frontend:${{ github.sha }}#g" k8s/frontend/frontend-deployment.yaml
             git add -A
             git commit -am "Update image for - ${{ github.sha }}"
       - run: echo ${{ github }}
