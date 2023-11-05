@@ -5,7 +5,50 @@ global:
 
 dex:
   enabled: false
-
+##### to get the argocd Password : kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}
+configs:
+  repositories:
+    private-repo:
+      url: https://github.com/wissem1996/PFE.git
 server:
   extraArgs:
     - --insecure
+  additionalApplications:
+  #### backend app
+    - name: backend
+      namespace: argocd
+      project: default
+      additionalLabels: {}
+      additionalAnnotations: {}
+      source:
+        repoURL: https://github.com/wissem1996/PFE.git
+        targetRevision: master
+        path: ./k8s/backend
+        directory:
+          recurse: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+  #### frontend app
+    - name: frontend
+      namespace: argocd
+      project: default
+      additionalLabels: {}
+      additionalAnnotations: {}
+      source:
+        repoURL: https://github.com/wissem1996/PFE.git
+        targetRevision: master
+        path: ./k8s/frontend
+        directory:
+          recurse: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
