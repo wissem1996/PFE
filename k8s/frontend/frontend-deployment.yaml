@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: wissemgh5/pfe_frontend:0501b2c8070152b6ef3008c72382e50f86a42993
+          image: wissemgh5/pfe_frontend:2d7cf84725a84de474b24106da3c88520e473620
           imagePullPolicy: Always
           ports:
             - containerPort: 80
