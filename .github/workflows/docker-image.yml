@@ -30,13 +30,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.13'
-      - run: cd ./angular-14-client
-      - run: npm install 
-      - run: npm run build 
+      - run: |
+              cd ./angular-14-client
+              npm install 
+              npm run build 
   build_docker_images:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
-    needs: [build_maven]
+    needs:
+      - build_maven  
+      - build_node
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
