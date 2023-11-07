@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist
-          path: spring-boot-server/dist/angular-14-crud-example
+          path: ./angular-14-client/dist/angular-14-crud-example
   build_docker_images:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
