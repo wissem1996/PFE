@@ -9,6 +9,7 @@
 ### STAGE 2: Run ###
 FROM wissemgh5/pfe_nginx:09553613069c4746d5457ba492361e145e3ebc03
 WORKDIR /opt/nginx
+USER pfe
 ENV BACKEND=backend:8080
 COPY --chown=pfe:pfe ./angular-14-client/dist/angular-14-crud-example /usr/share/nginx/html
 #COPY --chown=pfe:pfe ./angular-14-client/default.conf /etc/nginx/conf.d
