@@ -1,8 +1,8 @@
 name: Docker Image CI
 
 on:
-  # push:
-  #   branches: [ "BaseImages" ]
+  push:
+    branches: [ "BaseImages" ]
   pull_request:
     branches: [ "BaseImages" ]
 
