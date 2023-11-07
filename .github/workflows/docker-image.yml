@@ -34,6 +34,12 @@ jobs:
               cd ./angular-14-client
               npm install 
               npm run build 
+              ls -l .
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: spring-boot-server/dist/angular-14-crud-example
   build_docker_images:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
@@ -61,7 +67,7 @@ jobs:
           dockerfile: ./spring-boot-server/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          push: true
+          pushImage: false
           tags: ${{ github.sha }}
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-frontend
@@ -72,7 +78,7 @@ jobs:
           dockerfile: ./angular-14-client/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          push: true
+          pushImage: false
           tags: ${{ github.sha }}
           
   # update-manifest-stage:
