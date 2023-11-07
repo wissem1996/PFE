@@ -13,10 +13,7 @@ USER pfe
 ENV BACKEND=backend:8080
 COPY --chown=pfe:pfe ./angular-14-client/dist/angular-14-crud-example /usr/share/nginx/html
 COPY --chown=pfe:pfe ./angular-14-client/entrypoint.sh .
+COPY --chown=pfe:pfe ./angular-14-client/default.conf /etc/nginx/conf.d
 RUN chmod 775 /opt/nginx/entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
-EXPOSE 80 443
+ENTRYPOINT ["/opt/nginx/entrypoint.sh"]
 
-STOPSIGNAL SIGQUIT
-
-CMD ["nginx", "-g", "daemon off;"]
