@@ -7,10 +7,10 @@ COPY angular-14-client/ .
 RUN ls /usr/src/app/
 RUN npm run build
 ### STAGE 2: Run ###
-FROM nginx:1.17.1-alpine
+FROM wissemgh5/pfe_nginx:ea98bdf571dff928eda74076b706edb9d3917c88
 ENV BACKEND=backend:8080
 COPY --from=build /usr/src/app/dist/angular-14-crud-example /usr/share/nginx/html
-COPY ./angular-14-client/default.conf /etc/nginx/conf.d
+#COPY ./angular-14-client/default.conf /etc/nginx/conf.d
 COPY ./angular-14-client/entrypoint.sh .
 RUN chmod 775 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
