@@ -7,7 +7,7 @@
 # RUN ls /usr/src/app/
 # RUN npm run build
 ### STAGE 2: Run ###
-FROM wissemgh5/pfe_nginx:ea98bdf571dff928eda74076b706edb9d3917c88
+FROM wissemgh5/pfe_nginx:ea3dc693f03898da5798c2a3caf9f9944438ed29
 WORKDIR /opt/nginx
 ENV BACKEND=backend:8080
 COPY --chown=pfe:pfe ./angular-14-client/dist/angular-14-crud-example /usr/share/nginx/html

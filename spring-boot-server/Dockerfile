@@ -1,4 +1,4 @@
-FROM wissemgh5/pfe_openjdk8nginx
+FROM wissemgh5/pfe_jdk8:ea3dc693f03898da5798c2a3caf9f9944438ed29
 ENV DBNAME=${DBNAME}
 ENV DBHOST=${DBHOST}
 ENV DBUSERNAME=${DBUSERNAME}
