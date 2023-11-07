@@ -22,7 +22,7 @@ server:
       additionalAnnotations: {}
       source:
         repoURL: https://github.com/wissem1996/PFE.git
-        targetRevision: master
+        targetRevision: BaseImages
         path: ./k8s/backend
         directory:
           recurse: true
@@ -41,7 +41,7 @@ server:
       additionalAnnotations: {}
       source:
         repoURL: https://github.com/wissem1996/PFE.git
-        targetRevision: master
+        targetRevision: BaseImages
         path: ./k8s/frontend
         directory:
           recurse: true

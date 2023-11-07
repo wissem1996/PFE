@@ -30,7 +30,7 @@ spec:
           image: wissemgh5/pfe_frontend:0ad938e8d4c9e5b13d8d03afd432918099d13810
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           env:  # Add environment variables here
             - name: BACKEND
               value: "backend:8080/api/tutorials"
