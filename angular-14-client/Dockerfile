@@ -6,7 +6,7 @@
 # COPY angular-14-client/ .
 # RUN ls /usr/src/app/
 # RUN npm run build
-### STAGE 2: Run ###
+### STAGE 2: Run ##
 FROM wissemgh5/pfe_nginx:40e5c3e145a3e0c6a20e9e4e817db0943316841c
 WORKDIR /opt/nginx
 USER pfe
