@@ -21,6 +21,18 @@ jobs:
         with:
           name: app
           path: spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
+ 
+  build_node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.13'
+      - run: cd ./angular-14-client
+      - run: npm install 
+      - run: npm run build 
   build_docker_images:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
