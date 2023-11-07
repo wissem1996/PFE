@@ -7,7 +7,7 @@
 # RUN ls /usr/src/app/
 # RUN npm run build
 ### STAGE 2: Run ###
-FROM wissemgh5/pfe_nginx:2a739a43dcf389225f49f082fa080aaf69d74880
+FROM wissemgh5/pfe_nginx:40e5c3e145a3e0c6a20e9e4e817db0943316841c
 WORKDIR /opt/nginx
 USER pfe
 ENV BACKEND=backend:8080
