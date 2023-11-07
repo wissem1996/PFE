@@ -1,11 +1,10 @@
 FROM wissemgh5/pfe_jdk8:09553613069c4746d5457ba492361e145e3ebc03
+WORKDIR /opt/backend
 ENV DBNAME=${DBNAME}
 ENV DBHOST=${DBHOST}
 ENV DBUSERNAME=${DBUSERNAME}
 ENV DBPASSWD=${DBPASSWD}
 ARG JAR_FILE=./spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
-ARG ENTRYPOINT=./spring-boot-server/entrypoint.sh
-COPY ${JAR_FILE} app.jar
-COPY ${ENTRYPOINT} .
+COPY --chown=pfe:pfe ${JAR_FILE} app.jar
 RUN chmod 775 entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
