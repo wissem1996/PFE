@@ -34,7 +34,7 @@ jobs:
               cd ./angular-14-client
               npm install 
               npm run build 
-              ls -l .
+              ls -l ./dist/angular-14-crud-example
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
