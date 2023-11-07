@@ -58,6 +58,13 @@ jobs:
 
       - name: Unzip Artifact
         run: ls spring-boot-server/target/
+      - name: Download Artifact dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./angular-14-client/dist/angular-14-crud-example
+      - name: Unzip Artifact
+        run: ls -l ./angular-14-client/dist/angular-14-crud-example
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-backend
         name: build-image-backend
