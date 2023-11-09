@@ -18,10 +18,11 @@ jobs:
         run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
           # Package the artifact (e.g., JAR file)
       - name: SonarQube Scan
-        uses: kitabisa/sonarqube-action@v1.2.0
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
-          host: ${{ secrets.SONARQUBE_HOST }}
-          login: ${{ secrets.SONARQUBE_TOKEN }}
           projectBaseDir: ${{ github.workspace }}/spring-boot-server
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
