@@ -19,13 +19,14 @@
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.sonarsource.sonarqube/sonar-scanner-engine-shaded -->
 		<dependency>
-        		<groupId>org.sonarsource.scanner.maven</groupId>
-        		<artifactId>sonar-scanner-engine-shaded</artifactId>
-       			<version>7.1</version>
-        		<classifier>all</classifier>
-        		<scope>runtime</scope>
-    		</dependency>
+		    <groupId>org.sonarsource.sonarqube</groupId>
+		    <artifactId>sonar-scanner-engine-shaded</artifactId>
+		    <version>7.1</version>
+		    <scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
