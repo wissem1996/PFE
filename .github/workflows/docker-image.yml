@@ -15,7 +15,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build the spring app
-        run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
+        run: |
+          mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
+          mvn sonar:sonar -Dsonar.host.url=http://af88b0b4359c043ba8a9d86c412bbe67-626244eb3ad76207.elb.eu-west-3.amazonaws.com/sonar -Dsonar.login=f470dcba808d51ff6b554b142710b48a448551e5
           # Package the artifact (e.g., JAR file)
       - name: Clear SonarQube Scanner Cache
         run: rm -rf /opt/sonar-scanner/.sonar/cache
