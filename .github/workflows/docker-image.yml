@@ -23,7 +23,6 @@ jobs:
           host: ${{ secrets.SONARQUBE_HOST }}
           login: ${{ secrets.SONARQUBE_TOKEN }}
           projectBaseDir: ./spring-boot-server
-          projectKey: backend
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
