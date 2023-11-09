@@ -17,6 +17,9 @@ jobs:
       - name: Build the spring app
         run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
           # Package the artifact (e.g., JAR file)
+      - name: Clear SonarQube Scanner Cache
+        run: rm -rf /opt/sonar-scanner/.sonar/cache
+
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
