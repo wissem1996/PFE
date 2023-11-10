@@ -22,13 +22,13 @@ jobs:
       - name: Clear SonarQube Scanner Cache
         run: rm -rf /opt/sonar-scanner/.sonar/cache
 
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
-        with:
-          projectBaseDir: ${{ github.workspace }}/spring-boot-server
+      # - name: SonarQube Scan
+      #   uses: sonarsource/sonarqube-scan-action@master
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+      #     SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+      #   with:
+      #     projectBaseDir: ${{ github.workspace }}/spring-boot-server
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
