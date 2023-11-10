@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   # push:
-  #   branches: [ "BaseImages" ]
+  #   branches: [ "master" ]
   pull_request:
-    branches: [ "BaseImages" ]
+    branches: [ "master" ]
 
 jobs:
   build_maven:
@@ -18,14 +18,6 @@ jobs:
         run: |
           mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
           mvn sonar:sonar -f ./spring-boot-server/pom.xml -Dsonar.host.url=${{ secrets.SONARQUBE_HOST }} -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
-
-      # - name: SonarQube Scan
-      #   uses: sonarsource/sonarqube-scan-action@master
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-      #     SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
-      #   with:
-      #     projectBaseDir: ${{ github.workspace }}/spring-boot-server
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -115,7 +107,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
             repository: wissem1996/PFE
-            ref: 'BaseImages'
+            ref: 'master'
             token: ${{ secrets.G_TOKEN }}
       - name: setup git config
         run: |
@@ -127,4 +119,4 @@ jobs:
             git add -A
             git commit -am "Update image for - ${{ github.sha }}"
       - run: echo ${{ github }}
-      - run: git push origin BaseImages     
+      - run: git push origin master     
