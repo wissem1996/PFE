@@ -107,7 +107,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
             repository: wissem1996/PfeManifests
-            ref: 'master'
+            ref: 'main'
             token: ${{ secrets.G_TOKEN }}
       - name: setup git config
         run: |
@@ -119,4 +119,4 @@ jobs:
             git add -A
             git commit -am "Update image for - ${{ github.sha }}"
       - run: echo ${{ github }}
-      - run: git push origin master     
+      - run: git push origin main     
