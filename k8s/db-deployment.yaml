@@ -27,6 +27,13 @@ spec:
       containers:
         - name: db
           image: postgres:13.1-alpine
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1.5Gi
+            requests:
+              cpu: 300m
+              memory: 1Gi
           env:
             - name: POSTGRES_USER
               value: postgres
