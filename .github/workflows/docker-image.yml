@@ -9,13 +9,23 @@ on:
 jobs:
   build_maven:
     runs-on: ubuntu-latest
+    environment: SONAR
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Build the spring app
-        run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
-          # Package the artifact (e.g., JAR file)
+        run: |
+          mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
+          mvn sonar:sonar -f ./spring-boot-server/pom.xml -Dsonar.host.url=${{ secrets.SONARQUBE_HOST }} -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+
+      # - name: SonarQube Scan
+      #   uses: sonarsource/sonarqube-scan-action@master
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+      #     SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+      #   with:
+      #     projectBaseDir: ${{ github.workspace }}/spring-boot-server
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -24,6 +34,7 @@ jobs:
  
   build_node:
     runs-on: ubuntu-latest
+    environment: SONAR
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -35,11 +46,19 @@ jobs:
               npm install 
               npm run build 
               ls -l ./dist/angular-14-crud-example
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+        with:
+          projectBaseDir: ${{ github.workspace }}//angular-14-client
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: dist
           path: ./angular-14-client/dist/angular-14-crud-example
+  
   build_docker_images:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
@@ -74,7 +93,7 @@ jobs:
           dockerfile: ./spring-boot-server/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          pushImage: true
+          pushImage: false
           tags: ${{ github.sha }}
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-frontend
@@ -85,7 +104,7 @@ jobs:
           dockerfile: ./angular-14-client/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          pushImage: true
+          pushImage: false
           tags: ${{ github.sha }}
           
   update-manifest-stage:
