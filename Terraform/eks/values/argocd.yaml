@@ -9,11 +9,31 @@ dex:
 configs:
   repositories:
     private-repo:
-      url: https://github.com/wissem1996/PFE.git
+      url: https://github.com/wissem1996/PfeManifests.git
 server:
   extraArgs:
     - --insecure
   additionalApplications:
+  #### Database
+    - name: db
+      namespace: argocd
+      project: default
+      additionalLabels: {}
+      additionalAnnotations: {}
+      source:
+        repoURL: https://github.com/wissem1996/PfeManifests.git
+        targetRevision: main
+        path: ./db
+        directory:
+          recurse: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+  
   #### backend app
     - name: backend
       namespace: argocd
@@ -21,9 +41,28 @@ server:
       additionalLabels: {}
       additionalAnnotations: {}
       source:
-        repoURL: https://github.com/wissem1996/PFE.git
-        targetRevision: master
-        path: ./k8s/backend
+        repoURL: https://github.com/wissem1996/PfeManifests.git
+        targetRevision: main
+        path: ./backend
+        directory:
+          recurse: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+  #### sonar
+    - name: sonar
+      namespace: argocd
+      project: default
+      additionalLabels: {}
+      additionalAnnotations: {}
+      source:
+        repoURL: https://github.com/wissem1996/PfeManifests.git
+        targetRevision: main
+        path: ./sonarqube
         directory:
           recurse: true
       destination:
@@ -40,9 +79,9 @@ server:
       additionalLabels: {}
       additionalAnnotations: {}
       source:
-        repoURL: https://github.com/wissem1996/PFE.git
-        targetRevision: master
-        path: ./k8s/frontend
+        repoURL: https://github.com/wissem1996/PfeManifests.git
+        targetRevision: main
+        path: ./frontend
         directory:
           recurse: true
       destination:

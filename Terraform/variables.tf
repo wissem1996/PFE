@@ -32,11 +32,11 @@ variable "cluster_endpoint_private_access" {
 }
 variable "instance_type" {
   type    = string
-  default = "t3.small"
+  default = "t3.medium"
 }
 variable "instance_types" {
   type    = list(string)
-  default = ["t3.small"]
+  default = ["t3.medium"]
 }
 
 variable "capacity_type" {

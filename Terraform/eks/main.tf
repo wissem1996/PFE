@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    kubectl = {
+      source = "gavinbunney/kubectl"
+      version = "1.14.0"
+    }
+  }
+}
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 19.0"
@@ -180,6 +188,40 @@ resource "helm_release" "karpenter" {
   create_namespace = true
   version          = "3.35.4"
   values           = [file("eks/values/argocd.yaml")]
+}
+
+resource "kubectl_manifest" "provisioners" {
+  
+  yaml_body = <<YAML
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: provisioner
+spec:
+  provider:
+    apiVersion: extensions.karpenter.sh/v1alpha1
+    kind: AWS
+    securityGroupSelector:
+      Name: "clusteralpha-node"
+    subnetSelector:
+      karpenter.sh/discovery: clusteralpha
+  requirements:
+  - key: node.kubernetes.io/instance-type
+    operator: In
+    values:
+    - t3.small
+  - key: karpenter.sh/capacity-type
+    operator: In
+    values:
+    - on-demand
+  - key: kubernetes.io/arch
+    operator: In
+    values:
+    - amd64
+  ttlSecondsAfterEmpty: 30
+  ttlSecondsUntilExpired: 172800
+YAML
+depends_on = [ helm_release.karpenter ]
 }
 
 # resource "aws_route53_zone" "eks" {
