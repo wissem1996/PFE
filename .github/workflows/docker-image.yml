@@ -9,22 +9,54 @@ on:
 jobs:
   build_maven:
     runs-on: ubuntu-latest
+    environment: SONAR
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Build the spring app
-        run: mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
-          # Package the artifact (e.g., JAR file)
+        run: |
+          mvn clean install -f ./spring-boot-server/pom.xml -DskipTests
+          mvn sonar:sonar -f ./spring-boot-server/pom.xml -Dsonar.host.url=${{ secrets.SONARQUBE_HOST }} -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: app
           path: spring-boot-server/target/spring-boot-jpa-postgresql-0.0.1-SNAPSHOT.jar
+ 
+  build_node:
+    runs-on: ubuntu-latest
+    environment: SONAR
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.13'
+      - run: |
+              cd ./angular-14-client
+              npm install 
+              npm run build 
+              ls -l ./dist/angular-14-crud-example
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+        with:
+          projectBaseDir: ${{ github.workspace }}//angular-14-client
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: ./angular-14-client/dist/angular-14-crud-example
+  
   build_docker_images:
     runs-on: ubuntu-latest
     environment: DOCKERHUB
-    needs: [build_maven]
+    needs:
+      - build_maven  
+      - build_node
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -37,6 +69,13 @@ jobs:
 
       - name: Unzip Artifact
         run: ls spring-boot-server/target/
+      - name: Download Artifact dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./angular-14-client/dist/angular-14-crud-example
+      - name: Unzip Artifact
+        run: ls -l ./angular-14-client/dist/angular-14-crud-example
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-backend
         name: build-image-backend
@@ -46,7 +85,7 @@ jobs:
           dockerfile: ./spring-boot-server/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          push: true
+          pushImage: false
           tags: ${{ github.sha }}
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-frontend
@@ -57,7 +96,7 @@ jobs:
           dockerfile: ./angular-14-client/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          push: true
+          pushImage: false
           tags: ${{ github.sha }}
           
   update-manifest-stage:

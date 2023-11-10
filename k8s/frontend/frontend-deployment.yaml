@@ -8,7 +8,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -27,10 +27,10 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: wissemgh5/pfe_frontend:149b21efe52bb133572e2c794255595575acbaef
+          image: wissemgh5/pfe_frontend:bcfe98258103912c7af4be3a5fa8ff56729a2c36
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           env:  # Add environment variables here
             - name: BACKEND
               value: "backend:8080/api/tutorials"
