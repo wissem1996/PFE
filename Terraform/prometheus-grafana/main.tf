@@ -6,4 +6,7 @@ resource "helm_release" "kube-prometheus" {
   version    = var.kube-version
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
+  values = [
+    "${file("${path.module}/values.yaml")}"
+  ]
 }

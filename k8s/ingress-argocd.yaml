@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: argocd
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # nginx.org/proxy-connect-timeout: 3600s
+    # nginx.org/proxy-read-timeout: 3600s
+    # nginx.org/proxy-send-timeout: 3600s
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+spec:
+  ingressClassName: external-nginx
+  rules:
+    - host: a9a0cc2c5055c414f87e0c8e5e9fd7d9-ec128a805790a5b8.elb.eu-west-3.amazonaws.com
+      http:
+        paths:
+          - path: /argocd(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
+          
+                  
+
