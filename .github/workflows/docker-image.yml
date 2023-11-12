@@ -137,4 +137,4 @@ jobs:
             git add -A
             git commit -am "Update image for - $COMMIT_SHA"
       - run: echo ${{ github }}
-      - run: git push origin main    
+      - run: git push origin main     
