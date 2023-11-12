@@ -85,7 +85,7 @@ jobs:
           dockerfile: ./spring-boot-server/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          pushImage: false
+          pushImage: true
           tags: ${{ github.sha }}
       - uses: mr-smithers-excellent/docker-build-push@v6
         id: build-image-frontend
@@ -96,7 +96,7 @@ jobs:
           dockerfile: ./angular-14-client/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          pushImage: false
+          pushImage: true
           tags: ${{ github.sha }}
           
   update-manifest-stage:
