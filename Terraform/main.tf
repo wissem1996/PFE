@@ -50,6 +50,7 @@ provider "helm" {
     }
   }
 }
+data "aws_caller_identity" "current" {}
 
 module "vpc" {
   source          = "./vpc"
@@ -86,3 +87,17 @@ module "grafana-prometheus" {
   kube-version = var.kube-version
 
 }
+
+
+module "external-dns" {
+  source                   = "./external-dns-helm/"
+  external_dns_policy_name = "external-dns-policy"
+  external_dns_role_name   = "external-dns-role"
+  account_id               = data.aws_caller_identity.current.account_id
+  oidc_url                 = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
+  zoneName                  = var.zoneName
+  region                   = var.region
+  external_dns_version     = var.external_dns_version
+  depends_on               = [module.eks]
+}
+

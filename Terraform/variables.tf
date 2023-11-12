@@ -110,4 +110,22 @@ variable "namespace" {
 variable "kube-version" {
     default = "36.2.0"
 
+ }
+variable "zoneName" {
+  default = "espritpfe.com"
+  
 }
+variable "external_dns_version" {
+  type = string
+  default = "6.11.2"
+}
+# variable "recordName" {
+#   default = "www"
+# }
+# variable "type" {
+#   default = "NS"
+  
+# }
+# variable "ttl" {
+#   default = "300"
+# }

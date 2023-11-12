@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: monitoring
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /grafana/$2
+    service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: a9a0cc2c5055c414f87e0c8e5e9fd7d9-ec128a805790a5b8.elb.eu-west-3.amazonaws.com
+      http: 
+        paths:
+          - path: /grafana(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: kube-prometheus-stackr-grafana
+                port:
+                  number: 80
+           
+          
+    
+

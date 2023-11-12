@@ -1,0 +1,10 @@
+grafana:
+  env:
+    GF_SERVER_SERVE_FROM_SUB_PATH: true
+    # GF_SERVER_ROOT_URL: "http://{{ .Values.ingress.hosts }}/grafana"
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    path: /grafana
+    pathType: Prefix
