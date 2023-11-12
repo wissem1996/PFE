@@ -131,7 +131,7 @@ jobs:
         run: |
             git config --global user.email ${{secrets.EMAIL }}
             git config --global user.name ${{ secrets.ACTOR }}
-            echo $COMMIT_SHA
+            echo "$COMMIT_SHA"
             sed -i "s#wissemgh5.*#wissemgh5/pfe_backend:$COMMIT_SHA#g" backend/backend-deployment.yaml
             sed -i "s#wissemgh5.*#wissemgh5/pfe_frontend:$COMMIT_SHA#g" frontend/frontend-deployment.yaml
             git add -A
