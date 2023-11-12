@@ -122,16 +122,13 @@ jobs:
         with:
           name: commit_sha.txt
           path: .
-        
-      - name: Read Commit SHA from File
-        run: |
-             COMMIT_SHA=$(cat commit_sha.txt)
-             echo "Commit SHA is $COMMIT_SHA"
       - name: setup git config
         run: |
             git config --global user.email ${{secrets.EMAIL }}
             git config --global user.name ${{ secrets.ACTOR }}
-            echo "$COMMIT_SHA"
+            COMMIT_SHA=$(cat commit_sha.txt)
+            echo "Commit SHA is $COMMIT_SHA"
+            rm -rf commit_sha.txt
             sed -i "s#wissemgh5.*#wissemgh5/pfe_backend:$COMMIT_SHA#g" backend/backend-deployment.yaml
             sed -i "s#wissemgh5.*#wissemgh5/pfe_frontend:$COMMIT_SHA#g" frontend/frontend-deployment.yaml
             git add -A
