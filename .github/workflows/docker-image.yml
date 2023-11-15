@@ -45,7 +45,7 @@ jobs:
       #     SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
       #   with:
       #     projectBaseDir: ${{ github.workspace }}//angular-14-client
-      # - name: Upload Artifact
+       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: dist
