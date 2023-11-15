@@ -1,4 +1,4 @@
-FROM wissemgh5/pfe_jdk8:316174deec459b84195c9d2dcd5fa54f99d96542
+FROM wissemgh5/pfe_jdk8:d5243d71a621e3b4c1c2a0d0ead849dd7d633556
 WORKDIR /opt/backend
 ENV DBNAME=${DBNAME}
 ENV DBHOST=${DBHOST}
